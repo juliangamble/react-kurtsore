@@ -1,0 +1,40 @@
+{
+  "name": "react-kurtsore",
+  "description": "React mixins for managing component state with 'kurtsore' cursors",
+  "version": "0.1.0",
+  "license": "BSD",
+  "main": "react-kurtsore.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dialelo/react-kurtsore.git"
+  },
+  "readmeFilename": "README.md",
+  "keywords": [
+    "atom",
+    "immutable",
+    "cursor",
+    "react"
+  ],
+  "dependencies": {
+    "lodash": "^3.2.0"
+  },
+  "devDependencies": {
+    "atomo": "0.1.1",
+    "immutable": "^3.6.2",
+    "jest-cli": "^0.2.2",
+    "kurtsore": "^0.1.0",
+    "react": "^0.12.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/atomo",
+      "<rootDir>/node_modules/immutable",
+      "<rootDir>/node_modules/kurtsore",
+      "<rootDir>/node_modules/lodash"
+    ]
+  }
+}
