@@ -11,7 +11,7 @@ var a = require("atomo"),
 
 var data = i.fromJS({text: "Hello", anotherText: "Bye"}),
     // state
-    a = a.atom(data),
+    atom = a.atom(data),
     // children components
     textChildDidUpdate = jest.genMockFunction(),
     TextView = React.createClass({
@@ -61,8 +61,8 @@ var data = i.fromJS({text: "Hello", anotherText: "Bye"}),
 
         componentDidUpdate: parentDidUpdate
     }),
-    render = function(el, props){
-        var cursorProps = { cursor: k.cursor(a) },
+    render = function(el, cursor, props){
+        var cursorProps = { cursor: cursor },
             finalProps = _.extend(props ? props : {}, cursorProps),
             elem = React.createElement(ParentView, finalProps);
         React.render(elem, el);
@@ -75,12 +75,12 @@ describe("CursorPropsMixin", function(){
         parentDidUpdate.mockClear();
         textChildDidUpdate.mockClear();
         anotherTextChildDidUpdate.mockClear();
-        a.reset(data);
+        atom.reset(data);
     });
 
     it("parent re-renders on its local state changes, but children not if they don't need to", function(){
         var el = document.createElement("div");
-        render(el);
+        render(el, k.cursor(atom));
         Simulate.click(el.firstChild);
         expect(parentDidUpdate).toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
@@ -89,8 +89,8 @@ describe("CursorPropsMixin", function(){
 
     it("parent re-renders when new props are added, but children not if they don't need to", function() {
         var el = document.createElement("div");
-        render(el);
-        render(el, { newProp: 42 });
+        render(el, k.cursor(atom));
+        render(el, k.cursor(atom), { newProp: 42 });
         expect(parentDidUpdate).toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
         expect(anotherTextChildDidUpdate).not.toBeCalled();
@@ -98,8 +98,8 @@ describe("CursorPropsMixin", function(){
 
     it("parent re-renders when prop values are changed, but children not if they don't need to", function() {
         var el = document.createElement("div");
-        render(el, { aProp: 42 });
-        render(el, { aProp: "foo" });
+        render(el, k.cursor(atom), { aProp: 42 });
+        render(el, k.cursor(atom), { aProp: "foo" });
         expect(parentDidUpdate).toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
         expect(anotherTextChildDidUpdate).not.toBeCalled();
@@ -107,9 +107,11 @@ describe("CursorPropsMixin", function(){
 
     it("nothing re-renders if their cursors aren't affected by a state change", function() {
         var el = document.createElement("div");
-        render(el);
-        a.addWatch(render.bind(null, el, {}));
-        a.swap(_.identity);
+        render(el, k.cursor(atom));
+        atom.addWatch(function(){
+            render(el, k.cursor(atom), {});
+        });
+        atom.swap(_.identity);
         expect(parentDidUpdate).not.toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
         expect(anotherTextChildDidUpdate).not.toBeCalled();
@@ -117,16 +119,18 @@ describe("CursorPropsMixin", function(){
 
     it("child views re-render when any of the immutable values they point to are changed", function(){
         var el = document.createElement("div");
-        render(el);
-        a.addWatch(render.bind(null, el, {}));
+        render(el, k.cursor(atom));
+        atom.addWatch(function(){
+            render(el, k.cursor(atom), {});
+        });
         expect(parentDidUpdate).not.toBeCalled();
-        a.swap(function(v) { return v.set("text", "lol"); });
+        atom.swap(function(v) { return v.set("text", "lol"); });
         expect(parentDidUpdate).toBeCalled();
         expect(textChildDidUpdate).toBeCalled();
         expect(anotherTextChildDidUpdate).not.toBeCalled();
 
         textChildDidUpdate.mockClear();
-        a.swap(function(v) { return v.set("anotherText", "lolwut"); });
+        atom.swap(function(v) { return v.set("anotherText", "lolwut"); });
         expect(parentDidUpdate).toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
         expect(anotherTextChildDidUpdate).toBeCalled();
