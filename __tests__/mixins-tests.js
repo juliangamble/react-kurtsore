@@ -96,7 +96,7 @@ describe("CursorPropsMixin", function(){
         expect(anotherTextChildDidUpdate).not.toBeCalled();
     });
 
-    it.only("parent re-renders when prop values are changed, but children not if they don't need to", function() {
+    it("parent re-renders when prop values are changed, but children not if they don't need to", function() {
         var el = document.createElement("div");
         render(el, { aProp: 42 });
         render(el, { aProp: "foo" });
@@ -108,7 +108,7 @@ describe("CursorPropsMixin", function(){
     it("nothing re-renders if their cursors aren't affected by a state change", function() {
         var el = document.createElement("div");
         render(el);
-        a.addWatch(render.bind(null, el));
+        a.addWatch(render.bind(null, el, {}));
         a.swap(_.identity);
         expect(parentDidUpdate).not.toBeCalled();
         expect(textChildDidUpdate).not.toBeCalled();
@@ -118,7 +118,7 @@ describe("CursorPropsMixin", function(){
     it("child views re-render when any of the immutable values they point to are changed", function(){
         var el = document.createElement("div");
         render(el);
-        a.addWatch(render.bind(null, el));
+        a.addWatch(render.bind(null, el, {}));
         expect(parentDidUpdate).not.toBeCalled();
         a.swap(function(v) { return v.set("text", "lol"); });
         expect(parentDidUpdate).toBeCalled();
