@@ -135,4 +135,46 @@ describe("CursorPropsMixin", function(){
         expect(textChildDidUpdate).not.toBeCalled();
         expect(anotherTextChildDidUpdate).toBeCalled();
     });
+
+    it("views re-render when the state their cursor points to changes if they have different values", function(){
+        var el = document.createElement("div"),
+            anotherAtom = a.atom(i.fromJS({text: "jajaja", anotherText: "jijiji"}));
+        render(el, k.cursor(atom));
+        render(el, k.cursor(anotherAtom));
+        expect(parentDidUpdate).toBeCalled();
+        expect(textChildDidUpdate).toBeCalled();
+        expect(anotherTextChildDidUpdate).toBeCalled();
+    });
+
+    it("views don't re-render when the state their cursor points to changes but values don't", function(){
+        var el = document.createElement("div"),
+            anotherAtom = a.atom(data);
+        render(el, k.cursor(atom));
+        render(el, k.cursor(anotherAtom));
+        expect(parentDidUpdate).not.toBeCalled();
+        expect(textChildDidUpdate).not.toBeCalled();
+        expect(anotherTextChildDidUpdate).not.toBeCalled();
+    });
+
+    it("views re-render when the path their cursor points to changes if they have different values", function(){
+        var el = document.createElement("div"),
+            newData = i.fromJS([{text: "foo", anotherText: "bar"}]),
+            anotherAtom = a.atom(newData);
+        render(el, k.cursor(atom));
+        render(el, k.cursor(anotherAtom, 0));
+        expect(parentDidUpdate).toBeCalled();
+        expect(textChildDidUpdate).toBeCalled();
+        expect(anotherTextChildDidUpdate).toBeCalled();
+    });
+
+    it("views don't re-render when the path their cursor points to changes if they have the same values", function(){
+        var el = document.createElement("div"),
+            newData = i.fromJS([data]),
+            anotherAtom = a.atom(newData);
+        render(el, k.cursor(atom));
+        render(el, k.cursor(anotherAtom, 0));
+        expect(parentDidUpdate).not.toBeCalled();
+        expect(textChildDidUpdate).not.toBeCalled();
+        expect(anotherTextChildDidUpdate).not.toBeCalled();
+    });
 });

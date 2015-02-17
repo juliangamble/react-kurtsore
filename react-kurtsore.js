@@ -38,7 +38,7 @@ var CursorPropsMixin = {
         });
 
         // Has any of the cursor snapshots changed?
-        if (_.any(oldAndNewCursors, function(cursors) { return !cursors[0].hasSameSnapshot(cursors[1]);})){
+        if (_.any(oldAndNewCursors, cursorShouldUpdate)) {
             return true;
         }
 
@@ -68,6 +68,12 @@ function collectObjectValuesIf(pred){
 
 var cursorValues = collectObjectValuesIf(k.Cursor.prototype.isCursor),
     nonCursorValues = collectObjectValuesIf(_.negate(k.Cursor.prototype.isCursor));
+
+function cursorShouldUpdate(cursors){
+    var oldC = cursors[0],
+        newC = cursors[1];
+    return !oldC.hasSameSnapshot(newC);
+};
 
 // ================================================================================
 //  Public API
