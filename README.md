@@ -15,11 +15,11 @@ $ npm install react-kurtsore
 
 ### CursorPropsMixin
 
-The `CursorPropsMixin` mixin implements a efficient `shouldComponentUpdate` for react components
+The `CursorPropsMixin` mixin implements an efficient `shouldComponentUpdate` for react components
 that receive cursors in their props. It is similar to [react.addons.PureRenderMixin](http://facebook.github.io/react/docs/pure-render-mixin.html)
 in that it assumes that the same non-cursor props and state shouldn't trigger a re-render.
 
-Apart from state and non-cursor prop checks, it will return true iff the snapshot of the cursor
+Apart from state and non-cursor prop checks, it will return true iff the snapshots of the cursor
 props are different. You just need to add it as a mixin in your components that receive cursors
 as props:
 
