@@ -66,8 +66,8 @@ function collectObjectValuesIf(pred){
     };
 };
 
-var cursorValues = collectObjectValuesIf(k.Cursor.prototype.isCursor),
-    nonCursorValues = collectObjectValuesIf(_.negate(k.Cursor.prototype.isCursor));
+var cursorValues = collectObjectValuesIf(k.isCursor),
+    nonCursorValues = collectObjectValuesIf(_.negate(k.isCursor));
 
 function cursorShouldUpdate(cursors){
     var oldC = cursors[0],

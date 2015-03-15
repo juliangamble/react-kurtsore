@@ -16,13 +16,13 @@
     "react"
   ],
   "dependencies": {
-    "lodash": "^3.2.0"
+    "lodash": "^3.2.0",
+    "atomo": "0.1.2",
+    "kurtsore": "0.1.2"
   },
   "devDependencies": {
-    "atomo": "0.1.1",
     "immutable": "^3.6.2",
     "jest-cli": "^0.2.2",
-    "kurtsore": "^0.1.0",
     "react": "^0.12.2"
   },
   "scripts": {
