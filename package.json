@@ -1,7 +1,7 @@
 {
   "name": "react-kurtsore",
   "description": "React mixins for managing component state with 'kurtsore' cursors",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "BSD",
   "main": "react-kurtsore.js",
   "repository": {
