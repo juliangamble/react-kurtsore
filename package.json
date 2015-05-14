@@ -17,8 +17,8 @@
   ],
   "dependencies": {
     "lodash": "^3.2.0",
-    "atomo": "0.1.2",
-    "kurtsore": "0.1.2"
+    "atomo": "^0.1.2",
+    "kurtsore": "^0.1.3"
   },
   "devDependencies": {
     "immutable": "^3.6.2",
