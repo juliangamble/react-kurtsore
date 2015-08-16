@@ -31,7 +31,7 @@ var k = require("kurtsore"),
 var Hello = React.createClass({
     propTypes: {
         user: React.PropTypes.instanceOf(k.Cursor)
-    }
+    },
 
     mixins: [ rk.CursorPropsMixin ],
 
