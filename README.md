@@ -42,6 +42,36 @@ var Hello = React.createClass({
 });
 ```
 
+## Making this work on OS X (in case you have the latest version of node)
+
+Install nvm
+```
+$ brew install nvm
+```
+
+Add nvm to your profile
+```
+$ echo "source $(brew --prefix nvm)/nvm.sh" >> ~/.profile
+
+$ source ~/.profile
+
+$ nvm -v
+```
+
+Install node 0.10 (when latest is 0.12)
+```
+$ nvm install 0.10
+
+$ nvm use 0.10
+```
+
+Update your project
+```
+$ npm rebuild
+
+$ npm install
+```
+
 ## License
 
 BSD 2-clause license, Copyright 2015 Alejandro Gómez.
